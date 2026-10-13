@@ -1,0 +1,138 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../domain/entities/room_entity.dart';
+
+class RoomModel extends RoomEntity {
+  RoomModel({
+    required super.maPhong,
+    required super.maChuTro,
+    required super.tieuDe,
+    required super.diaChi,
+    required super.quanHuyen,
+    required super.giaThue,
+    required super.dienTich,
+    required super.loaiPhong,
+    required super.moTa,
+    required super.trangThaiDuyet,
+    required super.trangThaiThue,
+    required super.danhSachAnh,
+    required super.tienIch,
+    super.chiPhiDien,
+    super.chiPhiNuoc,
+    super.chiPhiKhac,
+    super.soNguoiOToiDa,
+    super.isHienThi,
+    super.lyDoTuChoi,
+    super.luotXem,
+    super.diemDanhGiaTB,
+    super.countLuotDanhGia,
+    super.soLanTuChoi,
+    super.ngayTao,
+    super.isDeleted,
+    super.deletedAt,
+    super.viDo,
+    super.kinhDo,
+  });
+
+  factory RoomModel.fromMap(Map<String, dynamic> map, String id) {
+    return RoomModel(
+      maPhong: id,
+      maChuTro: map['MaChuTro'] ?? '',
+      tieuDe: map['TieuDe'] ?? '',
+      diaChi: map['DiaChi'] ?? '',
+      quanHuyen: map['QuanHuyen'] ?? '',
+      giaThue: (map['GiaThue'] ?? 0).toDouble(),
+      dienTich: (map['DienTich'] ?? 0).toDouble(),
+      loaiPhong: map['LoaiPhong'] ?? 'Phòng trọ',
+      moTa: map['MoTa'] ?? '',
+      trangThaiDuyet: map['TrangThaiDuyet'] ?? 'CHO_DUYET',
+      trangThaiThue: map['TrangThaiThue'] ?? 'CON_TRONG',
+      danhSachAnh: List<String>.from(map['DanhSachAnh'] ?? []),
+      tienIch: List<String>.from(map['TienIch'] ?? []),
+      chiPhiDien: map['ChiPhiDien'] != null ? (map['ChiPhiDien'] as num).toDouble() : null,
+      chiPhiNuoc: map['ChiPhiNuoc'] != null ? (map['ChiPhiNuoc'] as num).toDouble() : null,
+      chiPhiKhac: map['ChiPhiKhac'] != null ? (map['ChiPhiKhac'] as num).toDouble() : null,
+      soNguoiOToiDa: map['SoNguoiOToiDa'] ?? 2,
+      isHienThi: map['IsHienThi'] ?? true,
+      lyDoTuChoi: map['LyDoTuChoi'],
+      luotXem: map['LuotXem'] ?? 0,
+      diemDanhGiaTB: (map['DiemDanhGiaTB'] ?? 0.0).toDouble(),
+      countLuotDanhGia: map['CountLuotDanhGia'] ?? 0,
+      soLanTuChoi: map['SoLanTuChoi'] ?? 0,
+      ngayTao: map['NgayTao'] is Timestamp
+          ? (map['NgayTao'] as Timestamp).toDate()
+          : (map['NgayTao'] != null ? DateTime.tryParse(map['NgayTao'].toString()) : null),
+      isDeleted: map['IsDeleted'] ?? false,
+      deletedAt: map['DeletedAt'] is Timestamp
+          ? (map['DeletedAt'] as Timestamp).toDate()
+          : (map['DeletedAt'] != null ? DateTime.tryParse(map['DeletedAt'].toString()) : null),
+      viDo: map['ViDo'] != null ? (map['ViDo'] as num).toDouble() : null,
+      kinhDo: map['KinhDo'] != null ? (map['KinhDo'] as num).toDouble() : null,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'MaPhong': maPhong,
+      'MaChuTro': maChuTro,
+      'TieuDe': tieuDe,
+      'DiaChi': diaChi,
+      'QuanHuyen': quanHuyen,
+      'GiaThue': giaThue,
+      'DienTich': dienTich,
+      'LoaiPhong': loaiPhong,
+      'MoTa': moTa,
+      'TrangThaiDuyet': trangThaiDuyet,
+      'TrangThaiThue': trangThaiThue,
+      'DanhSachAnh': danhSachAnh,
+      'TienIch': tienIch,
+      'ChiPhiDien': chiPhiDien,
+      'ChiPhiNuoc': chiPhiNuoc,
+      'ChiPhiKhac': chiPhiKhac,
+      'SoNguoiOToiDa': soNguoiOToiDa,
+      'IsHienThi': isHienThi,
+      'LyDoTuChoi': lyDoTuChoi,
+      'LuotXem': luotXem,
+      'DiemDanhGiaTB': diemDanhGiaTB,
+      'CountLuotDanhGia': countLuotDanhGia,
+      'SoLanTuChoi': soLanTuChoi,
+      'NgayTao': ngayTao != null ? Timestamp.fromDate(ngayTao!) : FieldValue.serverTimestamp(),
+      'IsDeleted': isDeleted,
+      'DeletedAt': deletedAt != null ? Timestamp.fromDate(deletedAt!) : null,
+      'ViDo': viDo,
+      'KinhDo': kinhDo,
+    };
+  }
+
+  factory RoomModel.fromEntity(RoomEntity entity) {
+    return RoomModel(
+      maPhong: entity.maPhong,
+      maChuTro: entity.maChuTro,
+      tieuDe: entity.tieuDe,
+      diaChi: entity.diaChi,
+      quanHuyen: entity.quanHuyen,
+      giaThue: entity.giaThue,
+      dienTich: entity.dienTich,
+      loaiPhong: entity.loaiPhong,
+      moTa: entity.moTa,
+      trangThaiDuyet: entity.trangThaiDuyet,
+      trangThaiThue: entity.trangThaiThue,
+      danhSachAnh: entity.danhSachAnh,
+      tienIch: entity.tienIch,
+      chiPhiDien: entity.chiPhiDien,
+      chiPhiNuoc: entity.chiPhiNuoc,
+      chiPhiKhac: entity.chiPhiKhac,
+      soNguoiOToiDa: entity.soNguoiOToiDa,
+      isHienThi: entity.isHienThi,
+      lyDoTuChoi: entity.lyDoTuChoi,
+      luotXem: entity.luotXem,
+      diemDanhGiaTB: entity.diemDanhGiaTB,
+      countLuotDanhGia: entity.countLuotDanhGia,
+      soLanTuChoi: entity.soLanTuChoi,
+      ngayTao: entity.ngayTao,
+      isDeleted: entity.isDeleted,
+      deletedAt: entity.deletedAt,
+      viDo: entity.viDo,
+      kinhDo: entity.kinhDo,
+    );
+  }
+}
